@@ -7,15 +7,15 @@
 //=============================================================================================================================================
 
 void modo_rede_neural_setup() {
-    unsigned long tempo_treino = millis();
-
+    unsigned long tempo_inicio = millis();
+    
     //Dados de treinamento
     //Entrada: {SENSOR_DIREITA, SENSOR_ESQUERDA}
     const float entradas_treino[QUANTIDADE_DE_DADOS][NEORONIOS_CAMADA_ENTRADA] = {
-        {0, 0},
-        {0, 1},
+        {1, 1},
         {1, 0},
-        {1, 1}
+        {0, 1},
+        {0, 0}
     };
 
     //Saída: {PARAR, ESQUERDA, DIREITA, FRENTE}
@@ -36,12 +36,22 @@ void modo_rede_neural_setup() {
             rede_neural.BackProp(saidas_treino[j]);                                           //"Tells" to the NN if the output was the-expected-correct one | then, "teaches" it
         }
         
-        Serial.println("MSE: " + String(rede_neural.MeanSqrdError, 6));                       //Prints the Error.
+        epoch += 1;
+        mse = rede_neural.MeanSqrdError;
+
+        Serial.printf("EPOCH: %5d | ", epoch);                       //Prints the Error.
+        Serial.printf("MSE: %10.6f\n", mse);                         //Prints the Error.
+        
+        tempo_treino = millis() - tempo_inicio;
+        
+        if(epoch % 10 == 0) {
+            oled_setup_treinamento();
+        }
         
         //Pisca o LED durante o treinamento
         digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 
-    } while(rede_neural.getMeanSqrdError(QUANTIDADE_DE_DADOS) > ERRO_MEDIO_QUADRATICO);       //Loops through each epoch Until MSE goes < 0.003
+    } while(rede_neural.getMeanSqrdError(QUANTIDADE_DE_DADOS) > ERRO_MEDIO_QUADRATICO && epoch < EPOCHS);       //Loops through each epoch Until MSE goes < 0.003
 
     Serial.println(F("*********************************************************"));
 
@@ -51,11 +61,13 @@ void modo_rede_neural_setup() {
     
     Serial.println(F("*********************************************************"));
     */
-    
-    //Calcula e imprime o tempo de duração do treinamento
-    tempo_treino = millis() - tempo_treino;
-    Serial.println("Duração do treinamento: " + String(tempo_treino / 1000.0, 2) + " segundos");
 
+    oled_setup_treinamento();
+
+    //Calcula e imprime o tempo de duração do treinamento
+    Serial.println("Duração do treinamento: " + String(tempo_treino / 1000.0, 2) + " segundos");
+    delay(3000);
+    
     Serial.println(F("*********************************************************"));
 }
 

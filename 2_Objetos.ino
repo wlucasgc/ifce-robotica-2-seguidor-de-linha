@@ -2,6 +2,10 @@
 //OBJETOS
 //=============================================================================================================================================
 
+//Display OLES 128x64
+Adafruit_SSD1306 oled(OLED_LARGURA, OLED_ALTURA, &Wire, OLED_RESET);
+Newneotimer oled_timer(100);
+
 //Sensor Reflexivo IR
 Newneotimer sensor_reflexivo_timer(10);
 

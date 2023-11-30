@@ -3,7 +3,7 @@
 //=============================================================================================================================================
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     Serial.println();
     Serial.println(F("*********************************************************"));
@@ -17,13 +17,26 @@ void setup() {
     
     pinMode(LED_BUILTIN, OUTPUT);                //Configura o pino do LED
     digitalWrite(LED_BUILTIN, LOW);              //Inicia o LED desligado
-    pinMode(PINO_MODO, INPUT_PULLUP);            //Configura o pino identificador do modo de funcionamento
     
-    sensores_reflexivos_setup();                 //Configura os Sensores Reflexivos
-    motores_stepper_setup();                     //Configura os Motores Stepper
-      
+    pinMode(PINO_MODO, INPUT_PULLUP);            //Configura o pino identificador do modo de funcionamento
     modo = digitalRead(PINO_MODO);               //Identifica o modo de funcionamento
     
+    oled_setup();    
+    sensores_reflexivos_setup();                 //Configura os Sensores Reflexivos
+    motores_stepper_setup();                     //Configura os Motores Stepper
+
+    if(erro) {
+        Serial.println(F("Ocorreu um erro durante a inicialização! Reiniciando..."));
+        Serial.println(F("*********************************************************"));
+
+        delay(1000);
+        ESP.restart();
+    }      
+    
+    Serial.println(F("*********************************************************"));
+    
+    oled_setup_intro();
+
     //Modo Rede Neural
     if(modo) {
         modo_rede_neural_setup();                //Realiza o treino da Rede Neural    
@@ -32,9 +45,7 @@ void setup() {
 
     //Modo Normal
     else {
-        delay(1000);                             //Aguarda 1 segundo
         digitalWrite(LED_BUILTIN, HIGH);         //Liga o LED
-        delay(2000);                             //Aguarda 2 segundos
     }
 }
 

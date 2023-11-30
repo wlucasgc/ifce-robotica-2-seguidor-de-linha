@@ -19,32 +19,35 @@
 #define ReLU                                     //Habilita a Função de Ativação ReLU (2)
 
 #include <NeuralNetwork.h>                       //Biblioteca para Redes Neurais
+#include <Adafruit_SSD1306.h>
 #include <TinyStepper_28BYJ_48.h>                //Biblioteca para os Motores Stepper
 #include <Newneotimer.h>                         //Biblioteca para temporização de processos     
-#include <LibPrintf.h>                           //Biblioteca para impressão formatada "printf"
 
 //=============================================================================================================================================
 //DEFINIÇÕES DE PINOS
 //=============================================================================================================================================
 
+//LED da placa
+const byte LED_BUILTIN = 2;
+
 //Modo de execução
-const byte PINO_MODO = 2;
+const byte PINO_MODO = 23;
 
 //Stepper Direita
-const byte STEPPER_DIREITA_IN1 = 3;
-const byte STEPPER_DIREITA_IN2 = 4;
-const byte STEPPER_DIREITA_IN3 = 5;
-const byte STEPPER_DIREITA_IN4 = 6;
+const byte STEPPER_DIREITA_IN1 = 4;
+const byte STEPPER_DIREITA_IN2 = 5;
+const byte STEPPER_DIREITA_IN3 = 18;
+const byte STEPPER_DIREITA_IN4 = 19;
 
 //Stepper Esquerda
-const byte STEPPER_ESQUERDA_IN1 = 7;
-const byte STEPPER_ESQUERDA_IN2 = 8;
-const byte STEPPER_ESQUERDA_IN3 = 9;
-const byte STEPPER_ESQUERDA_IN4 = 10;
+const byte STEPPER_ESQUERDA_IN1 = 13;
+const byte STEPPER_ESQUERDA_IN2 = 12;
+const byte STEPPER_ESQUERDA_IN3 = 14;
+const byte STEPPER_ESQUERDA_IN4 = 27;
 
 //Sensores reflexivos
-const byte SENSOR_DIREITA = 11;
-const byte SENSOR_ESQUERDA = 12;
+const byte SENSOR_DIREITA = 26;
+const byte SENSOR_ESQUERDA = 25;
 
 //=============================================================================================================================================
 //CONFIGURAÇÕES
@@ -52,6 +55,12 @@ const byte SENSOR_ESQUERDA = 12;
 
 //Modo debug
 const bool DEBUG = false;
+
+//Configurações do Display OLED 128x64
+const int OLED_LARGURA = 128; // OLED display width, in pixels
+const int OLED_ALTURA = 64; // OLED display height, in pixels
+const int OLED_RESET = -1; // Reset pin # (or -1 if sharing Arduino reset pin)
+const int OLED_ENDERECO = 0x3C; ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
 
 //Configuração dos Steppers
 const int STEPPER_PASSOS_POR_REVOLUCAO = 2048;
@@ -74,7 +83,9 @@ const unsigned int CAMADAS[] = {                 //Arquitetura da Rede Neural
     NEORONIOS_CAMADA_SAIDA
 };
 
-const byte FUNCOES_DE_ATIVACAO[] = {1, 0, 2};    //Funções de Ativação em cada camada (0: Sigmoid | 1: Tanh | 2: ReLU)
+byte FUNCOES_DE_ATIVACAO[] = {1, 0, 2};    //Funções de Ativação em cada camada (0: Sigmoid | 1: Tanh | 2: ReLU)
+
+const unsigned int EPOCHS = 1000;
 
 const float ERRO_MEDIO_QUADRATICO = 0.001;       //Valor de Erro Médio Quadrático (MSE) desejado
 

@@ -8,7 +8,10 @@
 
 void sensores_reflexivos_setup() {
     pinMode(SENSOR_DIREITA, INPUT);
+    Serial.println(F("> Sensor Reflexivo (Direita)                           OK"));
+    
     pinMode(SENSOR_ESQUERDA, INPUT);
+    Serial.println(F("> Sensor Reflexivo (Esquerda)                          OK"));   
 }
 
 //=============================================================================================================================================
