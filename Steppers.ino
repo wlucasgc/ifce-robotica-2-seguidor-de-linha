@@ -35,7 +35,8 @@ void motores_stepper_setup() {
 //=============================================================================================================================================
 
 void motores_stepper_loop() {
-    if(direcao == "frente") {
+    //Verifica a direção do movimento e faz os Motores Stepper se moverem (ou não) na direção desejada
+    if(direcao == "frente") { 
         steppers_frente();
     }
 
@@ -56,21 +57,13 @@ void motores_stepper_loop() {
 //RETORNA A DIREÇÃO COMO UM VALOR NUMÉRICO
 //=============================================================================================================================================
 
-byte direcao_indice() {
-    if(direcao == "frente") {
-        return(3);
-    }
-
-    else if(direcao == "direita") {
-        return(2);
-    }
-
-    else if(direcao == "esquerda") {
-        return(1);
-    }
+byte direcao_indice(String direcao) {
+    String direcoes[] = {"parar", "esquerda", "direita", "frente"};       //Cria um vetor com as direções possíveis
     
-    else {
-        return(0);
+    for(int i = 0 ; i < 4 ; i++) {                                        //Percorre todo o vetor em busca da direção desejada
+        if(direcao == direcoes[i]) {                                      //Se encontrar a direção...
+            return(i);                                                    //Retorna o índice da direção no vetor
+        }
     }
 }
 
@@ -79,8 +72,8 @@ byte direcao_indice() {
 //=============================================================================================================================================
 
 void steppers_parar() {
-    stepper_direita.disableMotor();
-    stepper_esquerda.disableMotor();
+    stepper_direita.disableMotor();                                       //Desliga o Motor Stepper da direita (economiza energia)
+    stepper_esquerda.disableMotor();                                      //Desliga o Motor Stepper da esquerda (economiza energia)
 }
 
 //=============================================================================================================================================
@@ -88,8 +81,8 @@ void steppers_parar() {
 //=============================================================================================================================================
 
 void steppers_frente() {
-    stepper_direita.moveRelativeInSteps(-STEPPER_PASSOS_POR_VEZ);
-    stepper_esquerda.moveRelativeInSteps(-STEPPER_PASSOS_POR_VEZ);
+    stepper_direita.moveRelativeInSteps(-STEPPER_PASSOS_POR_VEZ);         //Executa a quantidade de passos desejada no Motor Stepper da direita 
+    stepper_esquerda.moveRelativeInSteps(-STEPPER_PASSOS_POR_VEZ);        //Executa a quantidade de passos desejada no Motor Stepper da esquerda
 }
 
 //=============================================================================================================================================
@@ -97,8 +90,8 @@ void steppers_frente() {
 //=============================================================================================================================================
 
 void steppers_tras() {
-    stepper_direita.moveRelativeInSteps(STEPPER_PASSOS_POR_VEZ);
-    stepper_esquerda.moveRelativeInSteps(STEPPER_PASSOS_POR_VEZ);
+    stepper_direita.moveRelativeInSteps(STEPPER_PASSOS_POR_VEZ);          //Executa a quantidade de passos desejada no Motor Stepper da direita
+    stepper_esquerda.moveRelativeInSteps(STEPPER_PASSOS_POR_VEZ);         //Executa a quantidade de passos desejada no Motor Stepper da esquerda
 }
 
 //=============================================================================================================================================
@@ -106,8 +99,8 @@ void steppers_tras() {
 //=============================================================================================================================================
 
 void steppers_direita() {
-    stepper_direita.disableMotor();
-    stepper_esquerda.moveRelativeInSteps(-STEPPER_PASSOS_POR_VEZ);
+    stepper_direita.disableMotor();                                       //Desliga o Motor Stepper da direita (economiza energia)
+    stepper_esquerda.moveRelativeInSteps(-STEPPER_PASSOS_POR_VEZ);        //Executa a quantidade de passos desejada no Motor Stepper da esquerda
 }
 
 //=============================================================================================================================================
@@ -115,8 +108,8 @@ void steppers_direita() {
 //=============================================================================================================================================
 
 void steppers_esquerda() {
-    stepper_direita.moveRelativeInSteps(-STEPPER_PASSOS_POR_VEZ);
-    stepper_esquerda.disableMotor();
+    stepper_direita.moveRelativeInSteps(-STEPPER_PASSOS_POR_VEZ);         //Executa a quantidade de passos desejada no Motor Stepper da direita
+    stepper_esquerda.disableMotor();                                      //Desliga o Motor Stepper da esquerda (economiza energia)
 }
 
 //=============================================================================================================================================

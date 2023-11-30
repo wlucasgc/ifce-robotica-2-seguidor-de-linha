@@ -7,10 +7,10 @@
 //=============================================================================================================================================
 
 void sensores_reflexivos_setup() {
-    pinMode(SENSOR_DIREITA, INPUT);
+    pinMode(SENSOR_DIREITA, INPUT);                                       //Configura o pino do Sensor Reflexivo IR da direita
     Serial.println(F("> Sensor Reflexivo (Direita)                           OK"));
     
-    pinMode(SENSOR_ESQUERDA, INPUT);
+    pinMode(SENSOR_ESQUERDA, INPUT);                                      //Configura o pino do Sensor Reflexivo IR da esquerda
     Serial.println(F("> Sensor Reflexivo (Esquerda)                          OK"));   
 }
 
@@ -19,9 +19,9 @@ void sensores_reflexivos_setup() {
 //=============================================================================================================================================
 
 void sensores_reflexivos_loop() {
-    if(sensor_reflexivo_timer.repeat()) {
-        sensor_direita_estado = !digitalRead(SENSOR_DIREITA);
-        sensor_esquerda_estado = !digitalRead(SENSOR_ESQUERDA);
+    if(sensor_reflexivo_timer.repeat()) {                                 //Verifica se é o momento de executar a rotina...
+        sensor_direita_estado = !digitalRead(SENSOR_DIREITA);             //Faz a leitura do Sensor Reflexivo IR da direita
+        sensor_esquerda_estado = !digitalRead(SENSOR_ESQUERDA);           //Faz a leitura do Sensor Reflexivo IR da esquerda
     }
 }
 

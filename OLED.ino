@@ -222,7 +222,7 @@ void oled_loop_normal() {
     if(oled_timer.repeat()) {
         byte i;
 
-        i = direcao_indice();
+        i = direcao_indice(direcao);
 
         oled.clearDisplay();                               //Limpa o Display OLED    
 
@@ -275,7 +275,7 @@ void oled_loop_rede_neural() {
     if(oled_timer.repeat()) {
         byte i;
 
-        i = direcao_indice();
+        i = direcao_indice(direcao);
 
         if(direcao != direcao_anterior) direcao_anterior = direcao;            
         
