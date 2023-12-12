@@ -209,7 +209,7 @@ void oled_setup_treinamento() {
     
     oled.setTextSize(1);
     oled.setCursor(0, 54);
-    oled.printf("Duracao (ms): %6.2f", tempo_treino / 1000.0);
+    oled.printf("Duracao: %9.3f s", tempo_treino / 1000.0);
     
     oled.display();                                    //Mostra as informações no Display
 }

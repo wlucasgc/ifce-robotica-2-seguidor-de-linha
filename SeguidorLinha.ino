@@ -64,7 +64,7 @@ const int OLED_ENDERECO = 0x3C; ///< See datasheet for Address; 0x3D for 128x64,
 
 //Configuração dos Steppers
 const int STEPPER_PASSOS_POR_REVOLUCAO = 2048;
-const int STEPPER_PASSOS_POR_VEZ = 5;
+const int STEPPER_PASSOS_POR_VEZ = 10;
 const int STEPPER_VELOCIDADE = 1000;
 const int STEPPER_ACELERACAO = 10000;
 

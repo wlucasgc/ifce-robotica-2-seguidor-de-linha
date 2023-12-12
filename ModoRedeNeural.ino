@@ -65,7 +65,7 @@ void modo_rede_neural_setup() {
     oled_setup_treinamento();
 
     //Calcula e imprime o tempo de duração do treinamento
-    Serial.println("Duração do treinamento: " + String(tempo_treino / 1000.0, 2) + " segundos");
+    Serial.println("Duração do treinamento: " + String(tempo_treino / 1000.0, 3) + " segundos");
     delay(3000);
     
     Serial.println(F("*********************************************************"));
